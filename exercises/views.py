@@ -22,6 +22,11 @@ def apiOverview(request):
 @api_view(['GET'])
 def exercise_list(request):
     exercises = Exercise.objects.all().order_by('name')
+    category = request.GET.get('category')
+
+    if category != None:
+        exercises = Exercise.objects.filter(category=category).order_by('name')
+
     p = Paginator(exercises, 10)
     page_num = request.GET.get('page', 1)
 
