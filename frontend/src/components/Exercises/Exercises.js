@@ -18,7 +18,12 @@ const Exercises = (props) => {
 
     return (
         <div>
-            {exerciseList}
+            <div className="card mb-4">
+                <div className="card-header">Exercises</div>
+                <ul className="list-group list-group-flush">
+                    {exerciseList}
+                </ul>
+            </div>
         </div>
     )
 }

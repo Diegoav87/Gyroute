@@ -1,3 +1,5 @@
+import './Exercise.css';
+
 const exercise = (props) => {
     const stripHTML = (str) => {
         return str.replace(/<[^>]*>/g, '');
@@ -16,9 +18,11 @@ const exercise = (props) => {
 
     return (
         <div>
-            <h3>{props.name}</h3>
-            <p>{stripHTML(exerciseDesc)}<span>...</span></p>
-            <p>{props.category}</p>
+            <li className="list-group-item border-bottom-grey">
+                <h4 className="card-title">{props.name}</h4>
+                <p className="card-text">{stripHTML(exerciseDesc)}<span>...</span></p>
+                <p className="text-secondary">{props.category}</p>
+            </li>
         </div>
     )
 }

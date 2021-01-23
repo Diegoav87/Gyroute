@@ -4,6 +4,9 @@ import { useState, useEffect } from 'react';
 import Exercises from './components/Exercises/Exercises.js';
 import Paginate from './components/Paginate/Paginate.js';
 import Categories from './components/Categories/Categories.js';
+import Navbar from './components/Navbar/Navbar.js';
+import Showcase from './components/Showcase/Showcase';
+import ExerciseShowcaseImg from './assets/images/exercise-showcase.jpg';
 
 const App = () => {
   const [exercises, setExercises] = useState([]);
@@ -46,15 +49,22 @@ const App = () => {
   }
 
   const changeCategory = (category) => {
-    setCategory(`&category=${category}`);
-    console.log(category)
+    if (category === 'All') {
+      setCategory('');
+    } else {
+      setCategory(`&category=${category}`);
+    }
   }
 
   return (
     <div>
-      <Categories changeCategory={changeCategory} />
-      <Exercises exercises={exercises} loading={loading} />
-      <Paginate exercisesPerPage={exercisesPerPage} totalExercises={totalExercises} paginate={paginate} nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} />
+      <Navbar />
+      <Showcase imgUrl={ExerciseShowcaseImg} title="Exercises" />
+      <div className="container mt-4 mb-4">
+        <Categories changeCategory={changeCategory} />
+        <Exercises exercises={exercises} loading={loading} />
+        <Paginate exercisesPerPage={exercisesPerPage} totalExercises={totalExercises} paginate={paginate} nextPage={nextPage} previousPage={previousPage} currentPage={currentPage} />
+      </div>
     </div>
   )
 }

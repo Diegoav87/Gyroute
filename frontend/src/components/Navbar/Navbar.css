@@ -1,0 +1,13 @@
+.main-nav {
+    background-color: #072A40;
+    padding: 10px;
+    color: white;
+}
+
+.main-nav li {
+    margin: 10px;
+}
+
+.brand {
+    font-size: 28px;
+}
