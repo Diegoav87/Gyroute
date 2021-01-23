@@ -4,6 +4,7 @@ from rest_framework.decorators import api_view
 from decouple import config
 from .models import Exercise
 from .serializers import ExerciseSerializer
+from django.core.paginator import Paginator, EmptyPage
 
 # Create your views here.
 @api_view(['GET'])
@@ -21,8 +22,20 @@ def apiOverview(request):
 @api_view(['GET'])
 def exercise_list(request):
     exercises = Exercise.objects.all().order_by('name')
-    serializer = ExerciseSerializer(exercises, many=True)
-    return Response(serializer.data)
+    p = Paginator(exercises, 10)
+    page_num = request.GET.get('page', 1)
+
+    try:
+        page = p.page(page_num)
+    except EmptyPage:
+        page = p.page(1)
+
+    serializer = ExerciseSerializer(page, many=True)
+    data = {
+        "exercises": exercises.count(),
+        "list": serializer.data
+    }
+    return Response(data)
 
 @api_view(['POST'])
 def create_exercise(request):
