@@ -12,20 +12,21 @@ class UserSerializer(serializers.ModelSerializer):
         model = User
         fields = ('username', 'email', 'password', 'password2')
 
-    def save(self):
-        user = User(
-            username=self.validated_data['username'], 
-            email=self.validated_data['email'], 
+    def validate(self, attrs):
+        if attrs['password'] != attrs['password2']:
+            raise serializers.ValidationError({"password": "Password fields didn't match."})
+
+        return attrs
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data['username'],
+            email=validated_data['email'],
         )
 
-        password=self.validated_data['password']
-        password2=self.validated_data['password2']
-
-        if password != password2:
-            raise serializers.ValidationError({'password': 'Passwords do not match.'})
-        
-        user.set_password(password)
+        user.set_password(validated_data['password'])
         user.save()
+
         return user
 
 

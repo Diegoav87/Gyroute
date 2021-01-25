@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'workouts',
     'rest_framework.authtoken',
+    'fronted',
 ]
 
 REST_FRAMEWORK = {
